@@ -1,0 +1,3012 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>안심복약 케어 - 감기약·진통제 의료용 마약류 및 중복 복용 예방</title>
+  <style>
+    /* ==========================================================================
+       1. CSS 변수 및 기본 리셋 (외부 폰트/CDN 없이 시스템 산세리프 폰트 최적화)
+       ========================================================================== */
+    :root {
+      --bg-body: #f4f7fb;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-accent-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-sub: #475569;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --primary: #1d4ed8;
+      --primary-hover: #1e40af;
+      --primary-light: #dbeafe;
+      --teal: #0d9488;
+      --teal-light: #ccfbf1;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --danger-border: #fecaca;
+      --warning: #d97706;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --success: #059669;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      --purple: #7c3aed;
+      --purple-bg: #f5f3ff;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 60px;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    /* ==========================================================================
+       2. 상단 헤더 & 자동저장 상태 바
+       ========================================================================== */
+    .app-header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+      color: #ffffff;
+      padding: 18px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-md);
+    }
+
+    .header-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title h1 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-title p {
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      margin-top: 2px;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .autosave-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(16, 185, 129, 0.18);
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #a7f3d0;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .autosave-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #34d399;
+      box-shadow: 0 0 8px #34d399;
+    }
+
+    .autosave-pill.saving {
+      background: rgba(245, 158, 11, 0.22);
+      border-color: rgba(251, 191, 36, 0.5);
+      color: #fde68a;
+    }
+
+    .autosave-pill.saving .autosave-dot {
+      background-color: #fbbf24;
+      box-shadow: 0 0 8px #fbbf24;
+    }
+
+    .btn-header-reset {
+      background: rgba(255, 255, 255, 0.12);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-header-reset:hover {
+      background: rgba(255, 255, 255, 0.22);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       3. 메인 컨테이너 & 모바일/PC 탭 내비게이션
+       ========================================================================== */
+    .container {
+      max-width: 1320px;
+      margin: 22px auto 0;
+      padding: 0 16px;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      background: var(--bg-card);
+      padding: 8px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      overflow-x: auto;
+    }
+
+    .nav-tab {
+      flex: 1;
+      min-width: 150px;
+      padding: 11px 14px;
+      border: none;
+      background: transparent;
+      color: var(--text-sub);
+      font-weight: 700;
+      font-size: 0.9rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-tab:hover {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    .nav-tab.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(29, 78, 216, 0.3);
+    }
+
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.22);
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+    }
+
+    .nav-tab:not(.active) .tab-badge {
+      background: var(--border-color);
+      color: var(--text-main);
+    }
+
+    .tab-section {
+      display: none;
+    }
+
+    .tab-section.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       4. 공통 카드 및 그리드 레이아웃
+       ========================================================================== */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .grid-dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .grid-2col, .grid-dashboard {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ==========================================================================
+       5. 배지(Badge) & 버튼 스타일
+       ========================================================================== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .badge-narcotic {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+    }
+
+    .badge-psychotropic {
+      background: var(--purple-bg);
+      color: var(--purple);
+      border: 1px solid #ddd6fe;
+    }
+
+    .badge-caution {
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
+    }
+
+    .badge-general {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid var(--success-border);
+    }
+
+    .badge-info {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-teal {
+      background: var(--teal);
+      color: #ffffff;
+    }
+
+    .btn-teal:hover {
+      background: #0f766e;
+    }
+
+    .btn-outline {
+      background: #ffffff;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-subtle);
+      border-color: #cbd5e1;
+    }
+
+    .btn-danger-soft {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+    }
+
+    .btn-danger-soft:hover {
+      background: #fee2e2;
+    }
+
+    .btn-sm {
+      padding: 6px 11px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+    }
+
+    /* ==========================================================================
+       6. 통합 중복·과다복용 경고 배너 (핵심 기능 3)
+       ========================================================================== */
+    .risk-banner {
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      border: 1.5px solid;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: var(--transition);
+    }
+
+    .risk-banner.safe {
+      background: var(--success-bg);
+      border-color: var(--success-border);
+      color: #065f46;
+    }
+
+    .risk-banner.caution {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      color: #92400e;
+    }
+
+    .risk-banner.danger {
+      background: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: #991b1b;
+      box-shadow: 0 4px 14px rgba(220, 38, 38, 0.12);
+    }
+
+    .risk-banner-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .risk-banner-title {
+      font-size: 1rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .risk-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.88rem;
+    }
+
+    .risk-list li {
+      background: rgba(255, 255, 255, 0.75);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border-left: 4px solid currentColor;
+    }
+
+    /* ==========================================================================
+       7. 약품 검색 & 상세 조회 영역 (핵심 기능 1)
+       ========================================================================== */
+    .search-box-wrap {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .search-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+    }
+
+    .quick-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .quick-tag {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-sub);
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .quick-tag:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: #93c5fd;
+    }
+
+    .search-results-list {
+      max-height: 360px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 4px;
+    }
+
+    .search-item {
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      background: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search-item:hover {
+      border-color: var(--primary);
+      background: var(--bg-accent-soft);
+    }
+
+    .search-item.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      box-shadow: 0 0 0 2px rgba(29, 78, 216, 0.15);
+    }
+
+    .search-item-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .search-item-sub {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
+
+    .empty-state-box {
+      text-align: center;
+      padding: 32px 16px;
+      background: var(--bg-subtle);
+      border: 1px dashed #cbd5e1;
+      border-radius: 14px;
+      color: var(--text-muted);
+    }
+
+    .empty-state-box strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .detail-panel {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    @media (max-width: 600px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-box {
+      background: #ffffff;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .detail-label {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .detail-value {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .interaction-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.84rem;
+      color: #78350f;
+      margin-top: 10px;
+    }
+
+    /* ==========================================================================
+       8. 직접 등록 폼 & 약봉투 사진 업로드 (핵심 기능 2)
+       ========================================================================== */
+    .form-group {
+      margin-bottom: 13px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      background: #ffffff;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    .photo-upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      background: var(--bg-subtle);
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .photo-upload-area:hover {
+      border-color: var(--primary);
+      background: var(--bg-accent-soft);
+    }
+
+    .photo-preview-wrap {
+      margin-top: 10px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .photo-preview-img {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* ==========================================================================
+       9. MY 복약 목록 & 복약 체크/메모 (핵심 기능 3 & 5)
+       ========================================================================== */
+    .my-med-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .med-card {
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      background: #ffffff;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .med-card:hover {
+      border-color: #93c5fd;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .med-card.active-med {
+      border-color: var(--primary);
+      background: #f8fbff;
+    }
+
+    .med-card.taken {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .med-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .med-card-left {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .med-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 1px solid var(--border-color);
+      background: var(--bg-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.3rem;
+    }
+
+    .med-name-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .med-name {
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: var(--text-main);
+    }
+
+    .med-card.taken .med-name {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .med-meta {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
+
+    .med-controls-bar {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border-color);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+      background: var(--bg-subtle);
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .check-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--success);
+      cursor: pointer;
+    }
+
+    .time-input {
+      padding: 4px 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      background: #ffffff;
+    }
+
+    .memo-wrap {
+      flex: 1;
+      min-width: 170px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .memo-input {
+      flex: 1;
+      padding: 5px 9px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    .memo-input:focus {
+      border-color: var(--primary);
+    }
+
+    .memo-count {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       10. KOSIS 데이터 시각화 & CSV 업로드 (핵심 기능 4)
+       ========================================================================== */
+    .chart-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .chart-mode-btns {
+      display: flex;
+      gap: 6px;
+      background: var(--bg-subtle);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .chart-mode-btn {
+      padding: 6px 12px;
+      border: none;
+      background: transparent;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+    }
+
+    .chart-mode-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .chart-tooltip {
+      position: absolute;
+      pointer-events: none;
+      background: rgba(15, 23, 42, 0.92);
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      line-height: 1.4;
+      box-shadow: var(--shadow-md);
+      display: none;
+      z-index: 20;
+      white-space: nowrap;
+    }
+
+    .csv-box {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: var(--bg-subtle);
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    /* ==========================================================================
+       11. 과다 복용 자가 체크리스트 & 독성 검사 안내 (핵심 기능 4)
+       ========================================================================== */
+    .symptom-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .symptom-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      background: #ffffff;
+    }
+
+    .symptom-item:hover {
+      background: var(--bg-subtle);
+    }
+
+    .symptom-item.checked {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .symptom-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .symptom-left input {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--danger);
+    }
+
+    .triage-result {
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      border: 1px solid;
+    }
+
+    .lab-steps {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 650px) {
+      .lab-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lab-step-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      position: relative;
+    }
+
+    .step-num {
+      display: inline-block;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+    }
+
+    .lab-step-card h4 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      margin-bottom: 5px;
+      color: var(--text-main);
+    }
+
+    .lab-step-card p {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+    }
+
+    /* ==========================================================================
+       12. 커스텀 알림 토스트 & 확인 모달 (alert/confirm 대체)
+       ========================================================================== */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 340px;
+    }
+
+    .toast {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideUp 0.25s ease;
+    }
+
+    .toast.error { background: #b91c1c; }
+    .toast.warning { background: #b45309; }
+    .toast.success { background: #047857; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      border-radius: 16px;
+      max-width: 400px;
+      width: 100%;
+      padding: 22px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .modal-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      margin-bottom: 18px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .disclaimer-footer {
+      max-width: 1320px;
+      margin: 24px auto 0;
+      padding: 0 16px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       상단 헤더 영역
+       ======================================================================== -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <!-- 순수 인라인 SVG 아이콘 -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9 12h6"></path>
+            <path d="M12 9v6"></path>
+          </svg>
+        </div>
+        <div class="brand-title">
+          <h1>안심복약 케어 <span style="font-weight:400; font-size:0.85rem; opacity:0.85;">| 의료용 마약류·중복복용 예방</span></h1>
+          <p>감기약·진통제 속 의료용 마약류 확인 및 효능군 중복·과다 복용 사전 예방 서비스</p>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <div id="autosaveStatus" class="autosave-pill" title="모든 변경사항이 브라우저에 자동 저장됩니다">
+          <span class="autosave-dot"></span>
+          <span id="autosaveText">브라우저 자동저장 완료</span>
+        </div>
+        <button type="button" class="btn-header-reset" id="btnResetSample">기본 예시 복원</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ======================================================================
+         통합 중복·과다복용 실시간 위험 감지 배너 (항상 상단 노출)
+         ====================================================================== -->
+    <section id="globalRiskBanner" class="risk-banner safe" aria-live="polite">
+      <div class="risk-banner-header">
+        <div class="risk-banner-title" id="riskBannerTitle">
+          <span>✅ 현재 등록된 복약 목록 안전 상태 분석 중...</span>
+        </div>
+        <span class="badge badge-info" id="riskCountBadge">등록 약품 0개</span>
+      </div>
+      <ul class="risk-list" id="riskBannerDetails"></ul>
+    </section>
+
+    <!-- ======================================================================
+         메인 탭 내비게이션
+         ====================================================================== -->
+    <nav class="nav-tabs" role="tablist">
+      <button type="button" class="nav-tab active" data-tab="tab-my-meds" role="tab" aria-selected="true">
+        <span>💊 MY 복약함 & 위험도 분석</span>
+        <span class="tab-badge" id="badgeMyMedCount">0</span>
+      </button>
+      <button type="button" class="nav-tab" data-tab="tab-search" role="tab" aria-selected="false">
+        <span>🔍 약품 검색 & 약봉투 등록</span>
+      </button>
+      <button type="button" class="nav-tab" data-tab="tab-stats" role="tab" aria-selected="false">
+        <span>📊 KOSIS 처방통계 & 과다복용 검사</span>
+      </button>
+    </nav>
+
+    <!-- ======================================================================
+         [탭 1] MY 복약함 & 상세 위험성 분석 (핵심 기능 3 & 5)
+         ====================================================================== -->
+    <section id="tab-my-meds" class="tab-section active">
+      <div class="grid-2col">
+        <!-- 좌측: MY 복약 목록 및 복약 체크/메모 -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">📋 MY 복약 목록 (복약 체크 & 메모)</h2>
+              <p class="card-subtitle">약 카드를 클릭하면 우측에서 마약류 여부 및 중복·병용 위험 상세 분석을 볼 수 있습니다.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="btnGoToSearch">+ 새 약 추가</button>
+          </div>
+
+          <div id="myMedListContainer" class="my-med-list">
+            <!-- JS로 렌더링 -->
+          </div>
+        </div>
+
+        <!-- 우측: 선택한 약의 공공데이터(효능군중복주의약물) 기준 상세 분석 패널 -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">🔬 선택 약품 정밀 위험성 분석</h2>
+              <p class="card-subtitle">공공데이터포털(효능군중복주의약물) 및 식약처 마약류 관리 기준</p>
+            </div>
+          </div>
+
+          <div id="selectedMedAnalysis">
+            <!-- JS로 렌더링 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         [탭 2] 새로운 약 검색 및 약봉투 직접 등록 (핵심 기능 1 & 2)
+         ====================================================================== -->
+    <section id="tab-search" class="tab-section">
+      <div class="grid-2col">
+        <!-- 좌측: 의약품 및 의료용 마약류 통합 검색 -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">🔍 의약품·성분 통합 검색</h2>
+              <p class="card-subtitle">감기약, 진통제 이름이나 성분(예: 코데인, 트라마돌, 아세트아미노펜)을 검색하세요.</p>
+            </div>
+          </div>
+
+          <div class="search-box-wrap">
+            <input type="text" id="drugSearchInput" class="search-input" placeholder="약 이름, 주성분, 증상(기침, 통증 등) 입력..." autocomplete="off" />
+            <button type="button" id="btnSearchDrug" class="btn btn-primary">검색</button>
+          </div>
+
+          <div class="quick-tags" aria-label="추천 검색 키워드">
+            <span style="font-size:0.75rem; color:var(--text-muted); align-self:center;">빠른검색:</span>
+            <button type="button" class="quick-tag" data-query="코데인">코데인(진해제)</button>
+            <button type="button" class="quick-tag" data-query="트라마돌">트라마돌(진통제)</button>
+            <button type="button" class="quick-tag" data-query="코푸">코푸시럽</button>
+            <button type="button" class="quick-tag" data-query="울트라셋">울트라셋</button>
+            <button type="button" class="quick-tag" data-query="펜타닐">펜타닐</button>
+            <button type="button" class="quick-tag" data-query="타이레놀">아세트아미노펜</button>
+            <button type="button" class="quick-tag" data-query="전체">전체목록(18종)</button>
+          </div>
+
+          <div id="searchFeedbackMsg" style="font-size:0.82rem; color:var(--text-sub); margin-bottom:10px;"></div>
+
+          <div id="searchResultsList" class="search-results-list">
+            <!-- 검색 결과 렌더링 -->
+          </div>
+
+          <!-- 검색된 약 상세 정보 & MY 복약 목록 추가 패널 -->
+          <div id="searchDetailPanel" class="detail-panel" style="display:none;">
+            <!-- 선택된 검색 약품 상세 렌더링 -->
+          </div>
+        </div>
+
+        <!-- 우측: 약봉투 사진 또는 약 이름 직접 등록 -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">📸 약봉투 사진 / 처방약 직접 등록</h2>
+              <p class="card-subtitle">검색에 없거나 조제받은 약봉투 사진을 찍어 내 복약함에 기록하세요.</p>
+            </div>
+          </div>
+
+          <form id="manualRegisterForm" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="regPhotoInput">1. 약봉투 또는 약 사진 첨부 (선택)</label>
+              <div class="photo-upload-area" id="photoDropArea">
+                <input type="file" id="regPhotoInput" accept="image/*" style="display:none;" />
+                <div style="font-size:1.5rem; margin-bottom:4px;">📷</div>
+                <div style="font-size:0.85rem; font-weight:700; color:var(--primary);">클릭하여 약봉투 사진 선택 (자동 용량 최적화)</div>
+                <div style="font-size:0.75rem; color:var(--text-muted); margin-top:2px;">JPG, PNG 지원 · 브라우저 내 안전하게 저장</div>
+                <div class="photo-preview-wrap" id="photoPreviewWrap">
+                  <img id="photoPreviewImg" class="photo-preview-img" src="" alt="첨부된 약봉투 미리보기" />
+                  <div style="text-align:left;">
+                    <div id="photoFileName" style="font-size:0.8rem; font-weight:700;"></div>
+                    <button type="button" id="btnRemovePhoto" class="btn btn-danger-soft btn-sm" style="margin-top:4px;">사진 삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regDrugName">2. 약 이름 (필수) <span style="color:var(--danger);">*</span></label>
+              <input type="text" id="regDrugName" class="form-control" placeholder="예: 코대원포르테시럽, 병원 처방 감기약(아침)" maxlength="40" required />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regDrugCategory">3. 약의 주요 기능 / 효능군 (필수) <span style="color:var(--danger);">*</span></label>
+              <select id="regDrugCategory" class="form-control">
+                <option value="">-- 효능군을 선택하세요 --</option>
+                <option value="진해거담제(기침·가래약)">진해거담제 (기침·가래 감기약)</option>
+                <option value="마약성 진통제">마약성 진통제 (강한 통증 완화)</option>
+                <option value="해열·소염진통제">해열·소염진통제 (두통·몸살·발열)</option>
+                <option value="종합감기약(코감기·목감기)">종합감기약 (콧물·코막힘·인후통)</option>
+                <option value="수면진정제·항불안제">수면진정제·항불안제 (불면·긴장 완화)</option>
+                <option value="기타 처방약">기타 처방약</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regDrugIngredient">4. 확인된 주성분 (선택 - 입력 시 마약류 자동 판별)</label>
+              <input type="text" id="regDrugIngredient" class="form-control" placeholder="예: 코데인, 트라마돌, 디히드로코데인, 아세트아미노펜 등" maxlength="50" />
+            </div>
+
+            <div id="regErrorBox" style="display:none; background:var(--danger-bg); color:var(--danger); border:1px solid var(--danger-border); padding:10px 12px; border-radius:10px; font-size:0.83rem; font-weight:700; margin-bottom:12px;"></div>
+
+            <button type="submit" class="btn btn-teal" style="width:100%; padding:12px;">
+              ✅ MY 복약 목록에 등록하기
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         [탭 3] KOSIS 처방 현황 데이터 시각화 & 과다복용 독성 검사 안내 (핵심 기능 4)
+         ====================================================================== -->
+    <section id="tab-stats" class="tab-section">
+      <!-- 상단: KOSIS 통계 차트 카드 -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">📊 KOSIS 의료용 마약류 효능별·성분별 처방 현황 분석</h2>
+            <p class="card-subtitle">국가통계포털(KOSIS) 의료용 마약류 취급현황 기반 추이 및 사용자 CSV 데이터 연동</p>
+          </div>
+          <span class="badge badge-info" id="chartDataSourceBadge">기본 KOSIS 통계 데이터</span>
+        </div>
+
+        <div class="chart-toolbar">
+          <div class="chart-mode-btns" role="group" aria-label="차트 보기 전환">
+            <button type="button" class="chart-mode-btn active" data-chart="yearly">연도별 처방 환자수·처방량 추이</button>
+            <button type="button" class="chart-mode-btn" data-chart="ingredient">주요 성분별 처방 비중 (진통·진해제)</button>
+          </div>
+
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="btn btn-outline btn-sm" id="btnDownloadSampleCsv">📥 샘플 CSV 다운로드</button>
+            <label class="btn btn-primary btn-sm" style="cursor:pointer;">
+              📤 CSV 파일 업로드 반영
+              <input type="file" id="csvUploadInput" accept=".csv" style="display:none;" />
+            </label>
+          </div>
+        </div>
+
+        <!-- 순수 HTML5 Canvas 차트 영역 -->
+        <div class="canvas-container" id="canvasWrapper">
+          <canvas id="kosisChartCanvas"></canvas>
+          <div id="chartTooltip" class="chart-tooltip"></div>
+        </div>
+
+        <div class="csv-box">
+          <div style="font-size:0.82rem; color:var(--text-sub);">
+            <strong>💡 사용자 CSV 업로드 안내:</strong> <code>구분(연도/성분),처방환자수(만명),처방량(백만정)</code> 형식의 UTF-8 CSV 파일을 업로드하면 차트에 즉시 반영되며 자동저장됩니다.
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="btnResetCsv">기본 통계로 초기화</button>
+        </div>
+      </div>
+
+      <!-- 하단: 과다 복용 의심 증상 자가 체크 & 의료기관 독성 검사 안내 -->
+      <div class="grid-dashboard">
+        <!-- 좌측: 과다 복용 의심 증상 자가 체크리스트 -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">🚨 과다 복용 의심 증상 자가 체크</h2>
+              <p class="card-subtitle">약 복용 후 아래 증상이 나타난다면 즉시 체크해 위험도를 확인하세요.</p>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" id="btnClearSymptoms">선택 초기화</button>
+          </div>
+
+          <div class="symptom-list" id="symptomChecklist">
+            <label class="symptom-item">
+              <div class="symptom-left">
+                <input type="checkbox" value="2" data-name="극심한 졸음·의식 혼미" />
+                <span>깨워도 자꾸 잠들거나 말이 어눌해지고 의식이 흐려짐</span>
+              </div>
+              <span class="badge badge-narcotic">고위험</span>
+            </label>
+            <label class="symptom-item">
+              <div class="symptom-left">
+                <input type="checkbox" value="3" data-name="호흡 느려짐·얕아짐" />
+                <span>숨쉬기가 평소보다 현저히 느려지거나 얕아짐 (분당 10회 미만)</span>
+              </div>
+              <span class="badge badge-narcotic">응급징후</span>
+            </label>
+            <label class="symptom-item">
+              <div class="symptom-left">
+                <input type="checkbox" value="2" data-name="동공 축소(바늘구멍 동공)" />
+                <span>밝기 변화와 관계없이 검은 눈동자(동공)가 바늘구멍처럼 작아짐</span>
+              </div>
+              <span class="badge badge-narcotic">고위험</span>
+            </label>
+            <label class="symptom-item">
+              <div class="symptom-left">
+                <input type="checkbox" value="1" data-name="심한 어지러움·구역/구토" />
+                <span>서 있기 힘들 정도의 심한 어지러움, 메스꺼움 또는 구토</span>
+              </div>
+              <span class="badge badge-caution">주의</span>
+            </label>
+            <label class="symptom-item">
+              <div class="symptom-left">
+                <input type="checkbox" value="1" data-name="심한 변비·소변 곤란" />
+                <span>복용 후 극심한 변비, 배뇨 곤란 또는 피부 가려움·식은땀</span>
+              </div>
+              <span class="badge badge-caution">주의</span>
+            </label>
+          </div>
+
+          <div id="triageResultBox" class="triage-result" style="background:var(--success-bg); border-color:var(--success-border); color:#065f46;">
+            <strong>현재 상태: 특이 의심 증상 없음 (정상)</strong>
+            <p style="margin-top:4px; font-size:0.83rem;">처방된 용법·용량을 준수하여 복용하시고, 다른 감기약·진통제 추가 복용 전 중복 여부를 꼭 확인하세요.</p>
+          </div>
+        </div>
+
+        <!-- 우측: 의료기관 약물 선별 및 독성 검사 과정 안내 -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">🏥 의료기관 약물 선별 및 독성 검사 안내</h2>
+              <p class="card-subtitle">중독·과다 복용 의심 시 병원에서 진행하는 과학적 진단 절차</p>
+            </div>
+          </div>
+
+          <div class="lab-steps">
+            <div class="lab-step-card">
+              <span class="step-num">STEP 1 · 응급 문진 및 활력징후</span>
+              <h4>복용 약봉투 확인 및 생체징후 측정</h4>
+              <p>복용한 약물의 성분명·복용량·시간을 확인하고, 산소포화도·호흡수·혈압·동공 반응을 즉시 평가합니다.</p>
+            </div>
+            <div class="lab-step-card">
+              <span class="step-num">STEP 2 · 소변 약물 선별검사</span>
+              <h4>면역분석법(Immunoassay) 신속 선별</h4>
+              <p>소변 검체를 이용해 코데인, 모르핀, 옥시코돈, 펜타닐, 벤조디아제핀 등 주요 약물군 양성 여부를 15~30분 내 신속 판별합니다.</p>
+            </div>
+            <div class="lab-step-card">
+              <span class="step-num">STEP 3 · 혈액 정밀 독성 확인</span>
+              <h4>질량분석기(GC-MS / LC-MS/MS) 분석</h4>
+              <p>혈액 검체에서 정확한 약물 성분과 혈중 농도를 정량 분석하여 단순 복용인지 독성 과다 복용인지 정밀 확진합니다.</p>
+            </div>
+            <div class="lab-step-card">
+              <span class="step-num">STEP 4 · 해독 및 전문 치료</span>
+              <h4>길항제(날록손 등) 투여 및 대증 치료</h4>
+              <p>마약성 진통제·진해제 독성이 확인되면 호흡 억제를 되돌리는 해독제(날록손) 투여 및 수액·호흡 보조 치료를 시행합니다.</p>
+            </div>
+          </div>
+
+          <div style="margin-top:12px; padding:11px 13px; background:#eff6ff; border-radius:10px; font-size:0.82rem; color:#1e3a8a;">
+            <strong>📞 긴급 도움 안내:</strong> 과다 복용이 의심되면 지체 없이 <strong>119 구급대</strong> 또는 <strong>응급실</strong>을 방문하시고, 복용하던 <strong>약봉투나 약병을 반드시 지참</strong>하세요.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="disclaimer-footer">
+    ※ 본 웹앱은 일반 환자 및 보호자의 이해를 돕기 위한 복약 안전 보조 도구이며, 의사의 처방이나 약사의 복약지도를 대체하지 않습니다. 모든 데이터는 사용자 기기의 브라우저(localStorage)에만 안전하게 자동저장됩니다.
+  </footer>
+
+  <!-- 토스트 메시지 컨테이너 -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- 커스텀 확인 모달 (confirm() 대체) -->
+  <div id="confirmModal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal-box">
+      <div class="modal-title" id="modalTitle">확인</div>
+      <div class="modal-desc" id="modalDesc">진행하시겠습니까?</div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="modalCancelBtn">취소</button>
+        <button type="button" class="btn btn-primary btn-sm" id="modalConfirmBtn">확인</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       JavaScript 로직 (데이터베이스, 자동저장, 위험 분석 엔진, Canvas 차트)
+       ======================================================================== -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ----------------------------------------------------------------------
+         1. 내장 의약품 & 공공데이터(효능군중복주의약물 + KOSIS) 샘플 DB (18종)
+         ---------------------------------------------------------------------- */
+      const DRUG_DATABASE = [
+        {
+          id: "D001",
+          name: "코푸시럽",
+          ingredient: "디히드로코데인타르타르산염, dl-메틸에페드린염산염, 클로르페니라민말레산염, 염화암모늄",
+          category: "진해거담제(기침·가래약)",
+          dupGroup: "마약류(한외마약) 진해제 · 코데인계",
+          narcoticType: "의료용 마약류(한외마약)",
+          riskLevel: "high",
+          maxDailyDose: "성인 1회 20mL, 1일 3회 (1일 최대 60mL)",
+          warning: "디히드로코데인(마약성 진해 성분)과 항히스타민제가 포함되어 심한 졸음 및 호흡 억제를 유발할 수 있습니다. 다른 기침약·종합감기약 및 음주와 절대 병용하지 마세요.",
+          avoidWith: ["다른 기침·가래약(코대원포르테 등)", "마약성 진통제(울트라셋·트라마돌)", "수면제·안정제", "술(알코올)"]
+        },
+        {
+          id: "D002",
+          name: "코대원포르테시럽",
+          ingredient: "디히드로코데인타르타르산염, dl-메틸에페드린염산염, 클로르페니라민말레산염, 염화암모늄",
+          category: "진해거담제(기침·가래약)",
+          dupGroup: "마약류(한외마약) 진해제 · 코데인계",
+          narcoticType: "의료용 마약류(한외마약)",
+          riskLevel: "high",
+          maxDailyDose: "성인 1회 20mL, 1일 3회 (12세 미만 소아 금기)",
+          warning: "코푸시럽과 동일 성분군(디히드로코데인)의 진해거담제입니다. 병원·약국에서 처방받은 다른 기침약과 중복 복용 시 과다 복용 위험이 매우 높습니다.",
+          avoidWith: ["코푸시럽·코푸정", "인산코데인 함유 제제", "마약성 진통제", "술(알코올)"]
+        },
+        {
+          id: "D003",
+          name: "인산코데인정 (코데인인산염수화물)",
+          ingredient: "코데인인산염수화물 20mg",
+          category: "진해거담제·마약성 진통제",
+          dupGroup: "의료용 마약 · 아편유사제(코데인계)",
+          narcoticType: "의료용 마약",
+          riskLevel: "high",
+          maxDailyDose: "1회 20mg, 1일 3회 (1일 최대 60~120mg, 의사 처방 엄수)",
+          warning: "의료용 마약으로 지정된 진해·진통제입니다. 과량 복용 시 호흡 억제, 의식 저하, 심한 변비가 발생하며 다른 진해제 및 진통제와 중복 복용을 엄격히 금합니다.",
+          avoidWith: ["디히드로코데인 함유 감기약", "트라마돌·옥시코돈 등 진통제", "수면진정제", "술(알코올)"]
+        },
+        {
+          id: "D004",
+          name: "울트라셋정 (트라마돌·아세트아미노펜)",
+          ingredient: "트라마돌염산염 37.5mg, 아세트아미노펜 325mg",
+          category: "마약성 진통제",
+          dupGroup: "마약류(향정신성의약품) 진통제 + 아세트아미노펜",
+          narcoticType: "의료용 마약류(향정신성의약품)",
+          riskLevel: "high",
+          maxDailyDose: "1일 최대 8정 (아세트아미노펜 기준 1일 4,000mg 초과 금지)",
+          warning: "트라마돌(마약류 진통 성분)과 타이레놀 성분(아세트아미노펜) 복합제입니다. 일반 감기약이나 타이레놀을 함께 먹으면 간 독성 및 호흡 억제·세로토닌 증후군 위험이 큽니다.",
+          avoidWith: ["타이레놀·종합감기약(아세트아미노펜 중복)", "트리돌 등 트라마돌 제제", "코데인 기침약", "술(알코올)"]
+        },
+        {
+          id: "D005",
+          name: "트리돌서방정 (트라마돌염산염)",
+          ingredient: "트라마돌염산염 100mg",
+          category: "마약성 진통제",
+          dupGroup: "마약류(향정신성의약품) 진통제 · 트라마돌계",
+          narcoticType: "의료용 마약류(향정신성의약품)",
+          riskLevel: "high",
+          maxDailyDose: "1일 최대 400mg (서방정은 쪼개거나 씹어 먹지 말 것)",
+          warning: "중추신경계에 작용하는 의료용 마약류(향정) 진통제입니다. 울트라셋정과 함께 복용 시 동일 성분 중복 과다 복용이 됩니다.",
+          avoidWith: ["울트라셋정", "코데인·옥시코돈·펜타닐", "항우울제·수면제", "술(알코올)"]
+        },
+        {
+          id: "D006",
+          name: "아이알코돈정 (옥시코돈염산염)",
+          ingredient: "옥시코돈염산염 5mg",
+          category: "마약성 진통제",
+          dupGroup: "의료용 마약 · 강효능 아편유사제",
+          narcoticType: "의료용 마약",
+          riskLevel: "high",
+          maxDailyDose: "환자 통증 정도에 따라 의사 처방 용량 엄수",
+          warning: "강력한 의료용 마약 진통제입니다. 감기약 속 코데인 성분이나 수면제, 술과 병용할 경우 치명적인 호흡 억제가 발생할 수 있습니다.",
+          avoidWith: ["모든 마약성 진통제·진해제", "벤조디아제핀계 안정제", "술(알코올)", "자몽주스"]
+        },
+        {
+          id: "D007",
+          name: "펜타닐패치 (듀로제식디트랜스패치)",
+          ingredient: "펜타닐 12~100mcg/h",
+          category: "마약성 진통제",
+          dupGroup: "의료용 마약 · 강효능 아편유사제(패치)",
+          narcoticType: "의료용 마약",
+          riskLevel: "high",
+          maxDailyDose: "72시간마다 1매 부착 (온열팩·뜨거운 목욕 금지)",
+          warning: "피부에 붙이는 초강력 의료용 마약 패치입니다. 부착 부위에 전기장판·핫팩 등 열이 가해지면 약물이 급격히 흡수되어 치명적 과다 복용을 유발합니다.",
+          avoidWith: ["다른 마약성 진통제·감기약", "수면제·근육이완제", "온열기구·사우나", "술(알코올)"]
+        },
+        {
+          id: "D008",
+          name: "타진서방정 (옥시코돈·날록손)",
+          ingredient: "옥시코돈염산염 10mg, 날록손염산염이수화물 5mg",
+          category: "마약성 진통제",
+          dupGroup: "의료용 마약 · 강효능 아편유사제",
+          narcoticType: "의료용 마약",
+          riskLevel: "high",
+          maxDailyDose: "12시간 간격 복용 (분쇄·씹기 금지)",
+          warning: "의료용 마약 진통제(옥시코돈)에 변비 완화 성분(날록손)을 결합한 약입니다. 다른 마약성 진통제·진해제와 중복 복용하지 마세요.",
+          avoidWith: ["아이알코돈·울트라셋·코데인", "수면진정제", "술(알코올)"]
+        },
+        {
+          id: "D009",
+          name: "노스판패치 (부프레노르핀)",
+          ingredient: "부프레노르핀 5~20mcg/h",
+          category: "마약성 진통제",
+          dupGroup: "마약류(향정신성의약품) 진통제(패치)",
+          narcoticType: "의료용 마약류(향정신성의약품)",
+          riskLevel: "high",
+          maxDailyDose: "7일(168시간)마다 1매 교체 부착",
+          warning: "주 1회 부착하는 향정신성 진통 패치입니다. 기존 패치를 떼지 않고 새 패치를 추가로 붙이면 과다 복용 위험이 발생합니다.",
+          avoidWith: ["펜타닐패치·트라마돌·코데인", "수면제·안정제", "술(알코올)"]
+        },
+        {
+          id: "D010",
+          name: "자낙스정 (알프라졸람)",
+          ingredient: "알프라졸람 0.25mg / 0.5mg",
+          category: "수면진정제·항불안제",
+          dupGroup: "마약류(향정신성의약품) · 벤조디아제핀계",
+          narcoticType: "의료용 마약류(향정신성의약품)",
+          riskLevel: "high",
+          maxDailyDose: "1일 0.75~1.5mg 분할 복용 (처방 엄수)",
+          warning: "향정신성의약품 항불안제입니다. 마약성 진통제나 코데인 함유 기침감기약과 함께 복용 시 중추신경 억제 상승작용으로 호흡곤란·혼수가 올 수 있습니다.",
+          avoidWith: ["마약성 진통제(트라마돌·옥시코돈)", "코데인·디히드로코데인 감기약", "졸피뎀", "술(알코올)"]
+        },
+        {
+          id: "D011",
+          name: "스틸녹스정 (졸피뎀타르타르산염)",
+          ingredient: "졸피뎀타르타르산염 10mg",
+          category: "수면진정제·항불안제",
+          dupGroup: "마약류(향정신성의약품) · 비벤조디아제핀 수면제",
+          narcoticType: "의료용 마약류(향정신성의약품)",
+          riskLevel: "high",
+          maxDailyDose: "1일 1회 취침 직전 10mg (1일 1정 초과 금지)",
+          warning: "의료용 마약류 수면제입니다. 감기약(항히스타민·코데인)이나 진통제와 병용 시 과도한 진정, 몽유병(수면 중 이상행동), 호흡 저하 위험이 커집니다.",
+          avoidWith: ["코푸시럽·코대원포르테", "마약성 진통제", "알프라졸람 등 안정제", "술(알코올)"]
+        },
+        {
+          id: "D012",
+          name: "타이레놀정 500mg (아세트아미노펜)",
+          ingredient: "아세트아미노펜 500mg",
+          category: "해열·소염진통제",
+          dupGroup: "해열진통제 · 아세트아미노펜 단일제",
+          narcoticType: "일반의약품 (비마약성)",
+          riskLevel: "caution",
+          maxDailyDose: "성인 1회 1~2정, 1일 최대 8정(4,000mg)",
+          warning: "의료용 마약류는 아니지만, 울트라셋정이나 종합감기약(판피린·판콜 등)에도 동일 성분이 들어있어 중복 복용 시 심각한 간 손상을 일으킵니다.",
+          avoidWith: ["울트라셋정", "종합감기약(판콜·판피린·테라플루)", "매일 3잔 이상 음주"]
+        },
+        {
+          id: "D013",
+          name: "판콜에이내복액 (종합감기약)",
+          ingredient: "아세트아미노펜 300mg, 클로르페니라민, 구아이페네신, 펜톡시베린",
+          category: "종합감기약(코감기·목감기)",
+          dupGroup: "해열진통제(아세트아미노펜) + 비마약성 진해제",
+          narcoticType: "일반의약품 (비마약성)",
+          riskLevel: "caution",
+          maxDailyDose: "성인 1회 1병(30mL), 1일 3회 식후 복용",
+          warning: "비마약성 진해제(펜톡시베린)와 아세트아미노펜이 복합된 감기약입니다. 병원 처방 감기약이나 타이레놀, 울트라셋과 함께 먹지 않도록 주의하세요.",
+          avoidWith: ["타이레놀·울트라셋", "병원 처방 감기약(성분 중복)", "술(알코올)"]
+        },
+        {
+          id: "D014",
+          name: "판피린큐액 (종합감기약)",
+          ingredient: "아세트아미노펜 300mg, 클로르페니라민, 티페피딘, 메틸에페드린",
+          category: "종합감기약(코감기·목감기)",
+          dupGroup: "해열진통제(아세트아미노펜) + 비마약성 진해제",
+          narcoticType: "일반의약품 (비마약성)",
+          riskLevel: "caution",
+          maxDailyDose: "성인 1회 1병(20mL), 1일 3회 식후 복용",
+          warning: "아세트아미노펜과 항히스타민제가 들어있어 졸음을 유발하며, 다른 해열진통제 및 처방 감기약과 중복 복용 시 과량 복용 위험이 있습니다.",
+          avoidWith: ["타이레놀·게보린·울트라셋", "다른 종합감기약", "술(알코올)"]
+        },
+        {
+          id: "D015",
+          name: "애드빌정 / 부루펜정 (이부프로펜)",
+          ingredient: "이부프로펜 200mg / 400mg",
+          category: "해열·소염진통제",
+          dupGroup: "해열소염진통제 · NSAIDs 계열",
+          narcoticType: "일반/전문의약품 (비마약성)",
+          riskLevel: "caution",
+          maxDailyDose: "성인 1일 최대 3,200mg (일반약 기준 1,200mg 권장)",
+          warning: "비스테로이드성 소염진통제(NSAIDs)입니다. 록소프로펜·나프록센·아스피린 등 다른 소염진통제와 중복 복용 시 위장 출혈 및 신장 손상 위험이 높습니다.",
+          avoidWith: ["록소닌·낙센(다른 소염진통제)", "아스피린", "술(알코올)"]
+        },
+        {
+          id: "D016",
+          name: "록소닌정 (록소프로펜나트륨수화물)",
+          ingredient: "록소프로펜나트륨수화물 60mg",
+          category: "해열·소염진통제",
+          dupGroup: "해열소염진통제 · NSAIDs 계열",
+          narcoticType: "전문의약품 (비마약성)",
+          riskLevel: "caution",
+          maxDailyDose: "1회 60mg, 1일 3회 (1일 최대 180mg)",
+          warning: "병원에서 자주 처방되는 소염진통제입니다. 약국에서 산 부루펜·탁센 등 소염진통제와 효능군 중복 주의 약물입니다.",
+          avoidWith: ["이부프로펜·나프록센·세레콕시브", "술(알코올)"]
+        },
+        {
+          id: "D017",
+          name: "슈다페드정 (슈도에페드린염산염)",
+          ingredient: "슈도에페드린염산염 60mg",
+          category: "종합감기약(코감기·목감기)",
+          dupGroup: "비충혈제거제 · 교감신경흥분제",
+          narcoticType: "일반/전문의약품 (비마약성)",
+          riskLevel: "safe",
+          maxDailyDose: "성인 1회 60mg, 1일 3~4회 (1일 최대 240mg)",
+          warning: "코막힘을 완화하는 성분입니다. 코푸시럽·코대원포르테(메틸에페드린 함유)와 함께 복용 시 교감신경 흥분 중복으로 두근거림·혈압 상승이 나타날 수 있습니다.",
+          avoidWith: ["메틸에페드린 함유 기침약", "고혈압약 복용자 주의", "고카페인 음료"]
+        },
+        {
+          id: "D018",
+          name: "시네츄라시럽 (생약 진해거담제)",
+          ingredient: "아이비엽30%에탄올건조엑스, 황련수포화부탄올건조엑스",
+          category: "진해거담제(기침·가래약)",
+          dupGroup: "비마약성 생약 진해거담제",
+          narcoticType: "전문의약품 (비마약성)",
+          riskLevel: "safe",
+          maxDailyDose: "성인 1회 15mL, 1일 3회 복용",
+          warning: "의료용 마약류(코데인)가 포함되지 않은 생약 성분 기침·가래약입니다. 비교적 안전하나 다른 진해거담제와 불필요한 중복 투약은 피하세요.",
+          avoidWith: ["동일 효능 진해거담제 과다 중복"]
+        }
+      ];
+
+      /* ----------------------------------------------------------------------
+         2. KOSIS(의료용 마약류 효능별·성분별 처방 현황) 기본 통계 데이터
+         ---------------------------------------------------------------------- */
+      const DEFAULT_KOSIS_DATA = {
+        sourceLabel: "기본 KOSIS 통계 데이터 (식약처·KOSIS 2021~2025 추이)",
+        yearly: [
+          { label: "2021년", patients: 1884, volume: 1812 }, // 처방환자수(만명), 처방량(백만정)
+          { label: "2022년", patients: 1946, volume: 1895 },
+          { label: "2023년", patients: 1991, volume: 1938 },
+          { label: "2024년", patients: 2015, volume: 1962 },
+          { label: "2025년", patients: 1978, volume: 1910 }
+        ],
+        ingredient: [
+          { label: "트라마돌(진통)", patients: 742, volume: 685 },
+          { label: "코데인계(진해)", patients: 538, volume: 490 },
+          { label: "알프라졸람(항불안)", patients: 312, volume: 345 },
+          { label: "졸피뎀(수면)", patients: 215, volume: 220 },
+          { label: "옥시코돈·펜타닐", patients: 171, volume: 170 }
+        ]
+      };
+
+      /* ----------------------------------------------------------------------
+         3. LocalStorage 상태 관리 (자동저장)
+         ---------------------------------------------------------------------- */
+      const STORAGE_KEY = "medi_safe_guard_v1";
+
+      const DEFAULT_INITIAL_MEDS = [
+        {
+          uid: "M_INIT_1",
+          drugId: "D002",
+          name: "코대원포르테시럽",
+          category: "진해거담제(기침·가래약)",
+          ingredient: "디히드로코데인타르타르산염, dl-메틸에페드린염산염, 클로르페니라민",
+          registeredDate: getTodayStr(),
+          photo: "",
+          taken: true,
+          takeTime: "08:30",
+          memo: "식후 30분 복용"
+        },
+        {
+          uid: "M_INIT_2",
+          drugId: "D004",
+          name: "울트라셋정 (트라마돌·아세트아미노펜)",
+          category: "마약성 진통제",
+          ingredient: "트라마돌염산염 37.5mg, 아세트아미노펜 325mg",
+          registeredDate: getTodayStr(),
+          photo: "",
+          taken: false,
+          takeTime: "13:00",
+          memo: "졸음 주의 운전금지"
+        }
+      ];
+
+      let appState = {
+        myMeds: [],
+        selectedMedUid: null,
+        selectedSearchDrugId: "D001",
+        kosisData: JSON.parse(JSON.stringify(DEFAULT_KOSIS_DATA)),
+        chartMode: "yearly"
+      };
+
+      function getTodayStr() {
+        const d = new Date();
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            appState.myMeds = Array.isArray(parsed.myMeds) ? parsed.myMeds : JSON.parse(JSON.stringify(DEFAULT_INITIAL_MEDS));
+            appState.selectedMedUid = parsed.selectedMedUid || (appState.myMeds[0] ? appState.myMeds[0].uid : null);
+            appState.kosisData = parsed.kosisData && parsed.kosisData.yearly ? parsed.kosisData : JSON.parse(JSON.stringify(DEFAULT_KOSIS_DATA));
+            appState.chartMode = parsed.chartMode || "yearly";
+          } else {
+            appState.myMeds = JSON.parse(JSON.stringify(DEFAULT_INITIAL_MEDS));
+            appState.selectedMedUid = appState.myMeds[0].uid;
+            saveState(true);
+          }
+        } catch (err) {
+          console.error("로컬스토리지 로드 오류:", err);
+          appState.myMeds = JSON.parse(JSON.stringify(DEFAULT_INITIAL_MEDS));
+          appState.selectedMedUid = appState.myMeds[0].uid;
+        }
+      }
+
+      let saveTimer = null;
+      function saveState(silent = false) {
+        const pill = document.getElementById("autosaveStatus");
+        const text = document.getElementById("autosaveText");
+        if (!silent && pill && text) {
+          pill.classList.add("saving");
+          text.textContent = "자동저장 중...";
+        }
+
+        try {
+          const payload = {
+            myMeds: appState.myMeds,
+            selectedMedUid: appState.selectedMedUid,
+            kosisData: appState.kosisData,
+            chartMode: appState.chartMode
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (e) {
+          showToast("저장 공간이 부족합니다. 일부 사진이 큰 약품을 정리해주세요.", "error");
+        }
+
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+          if (pill && text) {
+            pill.classList.remove("saving");
+            const now = new Date();
+            const hh = String(now.getHours()).padStart(2, "0");
+            const mm = String(now.getMinutes()).padStart(2, "0");
+            const ss = String(now.getSeconds()).padStart(2, "0");
+            text.textContent = `자동저장 완료 (${hh}:${mm}:${ss})`;
+          }
+        }, 350);
+      }
+
+      /* ----------------------------------------------------------------------
+         4. 유틸리티: 토스트 알림 & 커스텀 확인 모달 (alert/confirm 미사용)
+         ---------------------------------------------------------------------- */
+      function showToast(message, type = "info") {
+        const container = document.getElementById("toastContainer");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+        const icon = type === "error" ? "⚠️" : type === "warning" ? "🔔" : type === "success" ? "✅" : "ℹ️";
+        toast.innerHTML = `<span>${icon}</span><span>${escapeHtml(message)}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          toast.style.transform = "translateY(10px)";
+          toast.style.transition = "all 0.25s ease";
+          setTimeout(() => toast.remove(), 260);
+        }, 3000);
+      }
+
+      function showConfirmDialog(title, desc, onConfirm) {
+        const modal = document.getElementById("confirmModal");
+        document.getElementById("modalTitle").textContent = title;
+        document.getElementById("modalDesc").textContent = desc;
+        modal.classList.add("open");
+
+        const cancelBtn = document.getElementById("modalCancelBtn");
+        const confirmBtn = document.getElementById("modalConfirmBtn");
+
+        const cleanup = () => {
+          modal.classList.remove("open");
+          cancelBtn.onclick = null;
+          confirmBtn.onclick = null;
+        };
+
+        cancelBtn.onclick = cleanup;
+        confirmBtn.onclick = () => {
+          cleanup();
+          onConfirm();
+        };
+      }
+
+      function escapeHtml(str) {
+        if (str === null || str === undefined) return "";
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      /* ----------------------------------------------------------------------
+         5. 약품 정보 매칭 & 중복·과다복용 위험 분석 엔진 (핵심 기능 3)
+         ---------------------------------------------------------------------- */
+      function resolveDrugProfile(med) {
+        // 1) DB ID가 있는 경우 우선 반환
+        if (med.drugId) {
+          const found = DRUG_DATABASE.find(d => d.id === med.drugId);
+          if (found) return found;
+        }
+        // 2) 이름이나 성분 키워드로 자동 분석 (직접 등록 약품 대응)
+        const text = `${med.name} ${med.ingredient || ""} ${med.category || ""}`.toLowerCase();
+
+        if (/코데인|디히드로코데인|코푸|코대원/.test(text)) {
+          return {
+            id: "CUSTOM_NARC_COUGH",
+            name: med.name,
+            ingredient: med.ingredient || "코데인 / 디히드로코데인 추정 성분",
+            category: med.category || "진해거담제(기침·가래약)",
+            dupGroup: "마약류(한외마약) 진해제 · 코데인계",
+            narcoticType: "의료용 마약류(한외마약) 의심",
+            riskLevel: "high",
+            maxDailyDose: "처방전 용법 준수 (1일 3회 초과 금지)",
+            warning: "코데인계 마약성 진해 성분이 포함된 것으로 분석됩니다. 다른 기침약·종합감기약 및 진통제와 중복 복용 시 호흡 억제 및 심한 졸음이 발생할 수 있습니다.",
+            avoidWith: ["다른 기침·가래약", "마약성 진통제", "수면제·안정제", "술(알코올)"]
+          };
+        }
+        if (/트라마돌|울트라셋|트리돌|옥시코돈|펜타닐|모르핀|부프레노르핀|아이알코돈|타진/.test(text)) {
+          return {
+            id: "CUSTOM_NARC_PAIN",
+            name: med.name,
+            ingredient: med.ingredient || "마약성 진통 성분 포함",
+            category: med.category || "마약성 진통제",
+            dupGroup: "의료용 마약류 진통제 · 아편유사제",
+            narcoticType: "의료용 마약류",
+            riskLevel: "high",
+            maxDailyDose: "의사 처방 용량 엄수 (임의 증량 금지)",
+            warning: "의료용 마약류 진통 성분이 감지되었습니다. 다른 진통제·감기약·수면제 및 음주와 병용 시 과다 복용 및 중추신경 억제 위험이 매우 높습니다.",
+            avoidWith: ["다른 마약성 진통제·진해제", "타이레놀/감기약(복합제인 경우)", "수면제", "술(알코올)"]
+          };
+        }
+        if (/졸피뎀|알프라졸람|자낙스|스틸녹스|디아제팜|로라제팜/.test(text)) {
+          return {
+            id: "CUSTOM_PSYCH",
+            name: med.name,
+            ingredient: med.ingredient || "향정신성 수면·안정 성분",
+            category: med.category || "수면진정제·항불안제",
+            dupGroup: "마약류(향정신성의약품) · 중추신경억제제",
+            narcoticType: "의료용 마약류(향정신성의약품)",
+            riskLevel: "high",
+            maxDailyDose: "취침 전 또는 처방 용량 엄수",
+            warning: "향정신성의약품입니다. 코데인 함유 기침약이나 마약성 진통제와 함께 복용 시 심각한 호흡 저하 및 의식 혼미 위험이 있습니다.",
+            avoidWith: ["마약성 진통제·진해제", "다른 수면제·감기약", "술(알코올)"]
+          };
+        }
+        if (/아세트아미노펜|타이레놀|판콜|판피린|게보린/.test(text)) {
+          return {
+            id: "CUSTOM_AAP",
+            name: med.name,
+            ingredient: med.ingredient || "아세트아미노펜 함유 추정",
+            category: med.category || "해열·소염진통제",
+            dupGroup: "해열진통제 · 아세트아미노펜 계열",
+            narcoticType: "비마약성 (간독성 주의 성분)",
+            riskLevel: "caution",
+            maxDailyDose: "성인 기준 1일 총 4,000mg 초과 금지",
+            warning: "비마약성 해열진통제 성분이지만, 울트라셋정이나 종합감기약과 함께 복용 시 아세트아미노펜 중복 과다 복용으로 급성 간 손상이 발생할 수 있습니다.",
+            avoidWith: ["울트라셋정", "종합감기약(판콜·판피린)", "술(알코올)"]
+          };
+        }
+        if (/이부프로펜|록소프로펜|나프록센|부루펜|애드빌|록소닌/.test(text)) {
+          return {
+            id: "CUSTOM_NSAID",
+            name: med.name,
+            ingredient: med.ingredient || "소염진통제(NSAIDs) 성분",
+            category: med.category || "해열·소염진통제",
+            dupGroup: "해열소염진통제 · NSAIDs 계열",
+            narcoticType: "비마약성 (효능군 중복 주의)",
+            riskLevel: "caution",
+            maxDailyDose: "1일 권장량 준수 (식후 복용 권장)",
+            warning: "소염진통제 계열입니다. 두 가지 이상의 소염진통제를 함께 먹어도 통증 완화 효과는 커지지 않고 위장관 출혈·신장 부작용만 증가합니다.",
+            avoidWith: ["다른 소염진통제(NSAIDs)", "아스피린", "술(알코올)"]
+          };
+        }
+
+        // 일반 직접 입력 약품 기본 프로필
+        const isCoughOrPain = /진해|감기|진통|수면/.test(med.category || "");
+        return {
+          id: "CUSTOM_GENERAL",
+          name: med.name,
+          ingredient: med.ingredient || "성분 미입력 (약봉투 확인 필요)",
+          category: med.category || "기타 처방약",
+          dupGroup: med.category || "일반 처방약군",
+          narcoticType: isCoughOrPain ? "성분 확인 필요 (감기·진통 계열)" : "일반/처방 의약품",
+          riskLevel: isCoughOrPain ? "caution" : "safe",
+          maxDailyDose: "처방전 또는 약봉투에 기재된 1회/1일 용법 준수",
+          warning: isCoughOrPain
+            ? "기침약·진통제 계열은 의료용 마약류(코데인·트라마돌)나 아세트아미노펜이 복합된 경우가 많습니다. 약봉투의 성분명을 추가로 입력하면 더 정밀하게 분석할 수 있습니다."
+            : "처방된 용법을 지켜 복용하시고, 새로운 감기약이나 진통제를 추가할 때는 약사·의사에게 현재 복용 사실을 알리세요.",
+          avoidWith: ["성분 미확인 중복 감기약", "술(알코올)"]
+        };
+      }
+
+      function analyzeInteractions(medList) {
+        const warnings = [];
+        let overallLevel = "safe"; // safe | caution | danger
+
+        if (medList.length === 0) {
+          return {
+            level: "safe",
+            title: "등록된 복약 목록이 없습니다. 복용 중인 감기약·진통제를 추가해 보세요.",
+            items: ["약품 검색 또는 약봉투 사진 등록을 통해 의료용 마약류 포함 여부와 중복 위험을 즉시 확인할 수 있습니다."]
+          };
+        }
+
+        const profiles = medList.map(m => ({ med: m, profile: resolveDrugProfile(m) }));
+
+        // 1. 의료용 마약류 포함 약품 개수 확인
+        const narcoticMeds = profiles.filter(p => p.profile.riskLevel === "high");
+        if (narcoticMeds.length >= 2) {
+          overallLevel = "danger";
+          warnings.push({
+            type: "danger",
+            text: `🚨 [의료용 마약류 중복 위험] '${narcoticMeds.map(x => x.med.name).join(" + ")}' 등 의료용 마약류 성분 약품 ${narcoticMeds.length}종이 함께 등록되어 있습니다. 호흡 억제 및 과다 복용 위험이 매우 높으니 의사·약사 확인 전 동시 복용을 중단하세요.`
+          });
+        } else if (narcoticMeds.length === 1) {
+          overallLevel = "caution";
+          warnings.push({
+            type: "caution",
+            text: `⚠️ [의료용 마약류 포함] '${narcoticMeds[0].med.name}'에는 ${narcoticMeds[0].profile.narcoticType} 성분이 포함되어 있습니다. 추가 감기약·진통제 및 음주를 피하세요.`
+          });
+        }
+
+        // 2. 동일 효능군(코데인계 진해제 / 마약성 진통제 / 아세트아미노펜 / NSAIDs) 중복 검사
+        const hasCodeine = profiles.filter(p => /코데인|디히드로코데인/.test(`${p.med.name} ${p.profile.ingredient} ${p.profile.dupGroup}`));
+        if (hasCodeine.length >= 2) {
+          overallLevel = "danger";
+          warnings.push({
+            type: "danger",
+            text: `🚨 [동일 효능군 중복: 코데인계 진해제] '${hasCodeine.map(x => x.med.name).join(", ")}' 모두 코데인/디히드로코데인 성분이 중복됩니다. 기침약 중복 과다 복용 위험!`
+          });
+        }
+
+        const hasTramadol = profiles.filter(p => /트라마돌|울트라셋|트리돌/.test(`${p.med.name} ${p.profile.ingredient}`));
+        if (hasTramadol.length >= 2) {
+          overallLevel = "danger";
+          warnings.push({
+            type: "danger",
+            text: `🚨 [동일 성분 중복: 트라마돌] '${hasTramadol.map(x => x.med.name).join(", ")}'에 마약류 진통 성분(트라마돌)이 중복되어 있습니다.`
+          });
+        }
+
+        const hasAcetaminophen = profiles.filter(p => /아세트아미노펜|타이레놀|울트라셋|판콜|판피린/.test(`${p.med.name} ${p.profile.ingredient}`));
+        if (hasAcetaminophen.length >= 2) {
+          overallLevel = "danger";
+          warnings.push({
+            type: "danger",
+            text: `🚨 [과다 복용 위험: 아세트아미노펜 중복] '${hasAcetaminophen.map(x => x.med.name).join(", ")}'에 해열진통 성분(아세트아미노펜)이 중복됩니다. 1일 4,000mg 초과 시 심각한 간 독성 위험!`
+          });
+        }
+
+        const hasNsaids = profiles.filter(p => /NSAIDs|이부프로펜|록소프로펜|부루펜|애드빌|록소닌/.test(`${p.med.name} ${p.profile.ingredient} ${p.profile.dupGroup}`));
+        if (hasNsaids.length >= 2) {
+          if (overallLevel !== "danger") overallLevel = "caution";
+          warnings.push({
+            type: "caution",
+            text: `⚠️ [효능군 중복 주의: 소염진통제] '${hasNsaids.map(x => x.med.name).join(", ")}'은 동일 소염진통제 계열입니다. 중복 복용 시 위장 출혈 부작용이 커집니다.`
+          });
+        }
+
+        // 3. 마약성 진통/진해제 + 수면진정제(중추신경억제제) 병용 경고
+        const hasSedative = profiles.filter(p => /수면진정제|벤조디아제핀|졸피뎀|알프라졸람/.test(`${p.med.category} ${p.profile.dupGroup}`));
+        if (narcoticMeds.length >= 1 && hasSedative.length >= 1 && narcoticMeds[0].med.uid !== hasSedative[0].med.uid) {
+          overallLevel = "danger";
+          warnings.push({
+            type: "danger",
+            text: `🚨 [치명적 병용 주의] 마약류 진통/진해제와 수면·항불안제('${hasSedative.map(x => x.med.name).join(", ")}')를 함께 복용하면 호흡 저하 및 의식 소실 위험이 급증합니다.`
+          });
+        }
+
+        if (warnings.length === 0) {
+          return {
+            level: "safe",
+            title: "✅ 현재 등록된 복약 목록에서 심각한 마약류·효능군 중복이 발견되지 않았습니다.",
+            items: ["단, 새로운 감기약이나 진통제를 추가로 복용할 경우 반드시 본 앱에 등록해 중복 여부를 먼저 확인하세요."]
+          };
+        }
+
+        const titleMap = {
+          danger: "🚨 경고! 의료용 마약류 및 동일 효능군 중복·과다 복용 위험이 감지되었습니다!",
+          caution: "⚠️ 주의! 의료용 마약류 또는 중복 주의 성분이 포함되어 있습니다."
+        };
+
+        return {
+          level: overallLevel,
+          title: titleMap[overallLevel],
+          items: warnings.map(w => w.text)
+        };
+      }
+
+      /* ----------------------------------------------------------------------
+         6. UI 렌더링 함수들 (배너, MY 복약 목록, 상세 분석, 검색 결과)
+         ---------------------------------------------------------------------- */
+      function renderGlobalBanner() {
+        const banner = document.getElementById("globalRiskBanner");
+        const titleEl = document.getElementById("riskBannerTitle");
+        const listEl = document.getElementById("riskBannerDetails");
+        const countBadge = document.getElementById("riskCountBadge");
+        const tabBadge = document.getElementById("badgeMyMedCount");
+
+        const result = analyzeInteractions(appState.myMeds);
+        banner.className = `risk-banner ${result.level}`;
+        titleEl.textContent = result.title;
+        countBadge.textContent = `등록 약품 ${appState.myMeds.length}개`;
+        tabBadge.textContent = appState.myMeds.length;
+
+        listEl.innerHTML = result.items.map(item => `<li>${escapeHtml(item)}</li>`).join("");
+      }
+
+      function getBadgeHtml(profile) {
+        if (profile.riskLevel === "high") {
+          return `<span class="badge badge-narcotic">🚨 ${escapeHtml(profile.narcoticType)}</span>`;
+        }
+        if (profile.riskLevel === "caution") {
+          return `<span class="badge badge-caution">⚠️ ${escapeHtml(profile.narcoticType)}</span>`;
+        }
+        return `<span class="badge badge-general">✅ ${escapeHtml(profile.narcoticType)}</span>`;
+      }
+
+      function renderMyMedList() {
+        const container = document.getElementById("myMedListContainer");
+        if (appState.myMeds.length === 0) {
+          container.innerHTML = `
+            <div class="empty-state-box">
+              <strong>등록된 복약 목록이 비어 있습니다</strong>
+              <p style="font-size:0.84rem; margin-bottom:12px;">상단의 '약품 검색 & 약봉투 등록' 탭에서 처방받은 감기약이나 진통제를 추가해 보세요.</p>
+              <button type="button" class="btn btn-primary btn-sm" onclick="document.querySelector('[data-tab=tab-search]').click()">🔍 약품 검색하러 가기</button>
+            </div>
+          `;
+          renderSelectedMedAnalysis();
+          return;
+        }
+
+        // 선택된 약 UID 유효성 보장
+        if (!appState.myMeds.some(m => m.uid === appState.selectedMedUid)) {
+          appState.selectedMedUid = appState.myMeds[0].uid;
+        }
+
+        container.innerHTML = appState.myMeds.map(med => {
+          const profile = resolveDrugProfile(med);
+          const isSelected = med.uid === appState.selectedMedUid;
+          const thumbHtml = med.photo
+            ? `<img src="${med.photo}" alt="${escapeHtml(med.name)}" class="med-thumb" />`
+            : `<div class="med-thumb" aria-hidden="true">${profile.riskLevel === "high" ? "💊" : "🩺"}</div>`;
+
+          return `
+            <article class="med-card ${isSelected ? "active-med" : ""} ${med.taken ? "taken" : ""}" data-uid="${med.uid}">
+              <div class="med-card-top">
+                <div class="med-card-left">
+                  ${thumbHtml}
+                  <div>
+                    <div class="med-name-row">
+                      <span class="med-name">${escapeHtml(med.name)}</span>
+                      ${getBadgeHtml(profile)}
+                    </div>
+                    <div class="med-meta">
+                      <strong>효능군:</strong> ${escapeHtml(med.category)} · <strong>등록일:</strong> ${escapeHtml(med.registeredDate)}
+                    </div>
+                    <div class="med-meta" style="color:var(--text-muted);">
+                      주성분: ${escapeHtml(profile.ingredient)}
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-danger-soft btn-sm btn-delete-med" data-uid="${med.uid}" title="목록에서 삭제">삭제</button>
+              </div>
+
+              <div class="med-controls-bar" onclick="event.stopPropagation()">
+                <label class="check-label">
+                  <input type="checkbox" class="med-taken-chk" data-uid="${med.uid}" ${med.taken ? "checked" : ""} />
+                  <span>${med.taken ? "복약 완료" : "복약 체크"}</span>
+                </label>
+
+                <input type="time" class="time-input med-time-input" data-uid="${med.uid}" value="${escapeHtml(med.takeTime || "09:00")}" aria-label="복용 시간" />
+
+                <div class="memo-wrap">
+                  <input type="text" class="memo-input med-memo-input" data-uid="${med.uid}" value="${escapeHtml(med.memo || "")}" placeholder="주의 메모(최대 15자)" maxlength="15" />
+                  <span class="memo-count">${(med.memo || "").length}/15</span>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("");
+
+        // 카드 선택 이벤트
+        container.querySelectorAll(".med-card").forEach(card => {
+          card.addEventListener("click", () => {
+            appState.selectedMedUid = card.dataset.uid;
+            saveState(true);
+            renderMyMedList();
+          });
+        });
+
+        // 삭제 버튼 이벤트
+        container.querySelectorAll(".btn-delete-med").forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const uid = btn.dataset.uid;
+            const target = appState.myMeds.find(m => m.uid === uid);
+            showConfirmDialog(
+              "복약 목록에서 삭제",
+              `'${target ? target.name : "선택한 약품"}'을(를) MY 복약 목록에서 삭제하시겠습니까?`,
+              () => {
+                appState.myMeds = appState.myMeds.filter(m => m.uid !== uid);
+                saveState();
+                renderAll();
+                showToast("복약 목록에서 삭제되었습니다.", "info");
+              }
+            );
+          });
+        });
+
+        // 복약 완료 체크박스 이벤트
+        container.querySelectorAll(".med-taken-chk").forEach(chk => {
+          chk.addEventListener("change", () => {
+            const med = appState.myMeds.find(m => m.uid === chk.dataset.uid);
+            if (med) {
+              med.taken = chk.checked;
+              saveState();
+              renderMyMedList();
+              showToast(med.taken ? `'${med.name}' 복약 완료로 체크되었습니다.` : `'${med.name}' 복약 체크가 해제되었습니다.`, "success");
+            }
+          });
+        });
+
+        // 복용 시간 변경 이벤트
+        container.querySelectorAll(".med-time-input").forEach(inp => {
+          inp.addEventListener("change", () => {
+            const med = appState.myMeds.find(m => m.uid === inp.dataset.uid);
+            if (med) {
+              med.takeTime = inp.value;
+              saveState();
+            }
+          });
+        });
+
+        // 15자 이내 주의 메모 입력 이벤트 (실시간 자동저장)
+        container.querySelectorAll(".med-memo-input").forEach(inp => {
+          inp.addEventListener("input", () => {
+            const med = appState.myMeds.find(m => m.uid === inp.dataset.uid);
+            if (med) {
+              med.memo = inp.value.slice(0, 15);
+              const counter = inp.parentElement.querySelector(".memo-count");
+              if (counter) counter.textContent = `${med.memo.length}/15`;
+              saveState();
+            }
+          });
+        });
+
+        renderSelectedMedAnalysis();
+      }
+
+      function renderSelectedMedAnalysis() {
+        const panel = document.getElementById("selectedMedAnalysis");
+        const med = appState.myMeds.find(m => m.uid === appState.selectedMedUid);
+
+        if (!med) {
+          panel.innerHTML = `
+            <div class="empty-state-box">
+              <strong>분석할 약품을 선택해 주세요</strong>
+              <p style="font-size:0.84rem;">좌측 목록에서 약품을 선택하면 공공데이터 기준 상세 분석 결과를 확인할 수 있습니다.</p>
+            </div>
+          `;
+          return;
+        }
+
+        const profile = resolveDrugProfile(med);
+        const riskBannerColor = profile.riskLevel === "high"
+          ? "background:var(--danger-bg); border-color:var(--danger-border); color:#991b1b;"
+          : profile.riskLevel === "caution"
+            ? "background:var(--warning-bg); border-color:var(--warning-border); color:#92400e;"
+            : "background:var(--success-bg); border-color:var(--success-border); color:#065f46;";
+
+        const riskHeadline = profile.riskLevel === "high"
+          ? "🚨 의료용 마약류 포함 약품 — 과다 복용 및 병용 엄격 주의"
+          : profile.riskLevel === "caution"
+            ? "⚠️ 효능군 중복 주의 약품 — 동일 성분 중복 복용 주의"
+            : "✅ 비마약성 의약품 — 정해진 용법·용량 준수";
+
+        panel.innerHTML = `
+          <div style="padding:14px; border-radius:12px; border:1.5px solid; ${riskBannerColor} margin-bottom:14px;">
+            <div style="font-weight:800; font-size:0.95rem;">${riskHeadline}</div>
+            <div style="font-size:0.82rem; margin-top:4px;">선택 약품: <strong>${escapeHtml(med.name)}</strong> (${escapeHtml(profile.narcoticType)})</div>
+          </div>
+
+          ${med.photo ? `
+            <div style="margin-bottom:14px; text-align:center; background:var(--bg-subtle); padding:10px; border-radius:12px; border:1px solid var(--border-color);">
+              <img src="${med.photo}" alt="첨부된 약봉투 사진" style="max-height:160px; max-width:100%; border-radius:8px;" />
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">첨부된 약봉투/약품 사진</div>
+            </div>
+          ` : ""}
+
+          <div class="detail-grid">
+            <div class="detail-box">
+              <div class="detail-label">공공데이터 효능군 중복 분류</div>
+              <div class="detail-value">${escapeHtml(profile.dupGroup)}</div>
+            </div>
+            <div class="detail-box">
+              <div class="detail-label">의료용 마약류 지정 여부</div>
+              <div class="detail-value">${escapeHtml(profile.narcoticType)}</div>
+            </div>
+            <div class="detail-box">
+              <div class="detail-label">주성분 정보</div>
+              <div class="detail-value">${escapeHtml(profile.ingredient)}</div>
+            </div>
+            <div class="detail-box">
+              <div class="detail-label">1일 권장·최대 용량 기준</div>
+              <div class="detail-value">${escapeHtml(profile.maxDailyDose)}</div>
+            </div>
+          </div>
+
+          <div class="interaction-box">
+            <strong>📌 복용 시 핵심 주의사항 및 과다 복용 예방 안내:</strong>
+            <p style="margin-top:5px; line-height:1.55;">${escapeHtml(profile.warning)}</p>
+          </div>
+
+          <div style="margin-top:12px; padding:12px; background:var(--bg-subtle); border-radius:10px; border:1px solid var(--border-color);">
+            <div style="font-size:0.82rem; font-weight:800; color:var(--danger); margin-bottom:6px;">🚫 함께 먹으면 위험한 약물 및 음식:</div>
+            <div style="display:flex; flex-wrap:wrap; gap:6px;">
+              ${profile.avoidWith.map(item => `<span class="badge badge-narcotic">${escapeHtml(item)}</span>`).join("")}
+            </div>
+          </div>
+        `;
+      }
+
+      /* ----------------------------------------------------------------------
+         7. 새로운 약 검색 & 상세 조회 (핵심 기능 1)
+         ---------------------------------------------------------------------- */
+      function performDrugSearch(rawQuery) {
+        const query = (rawQuery || "").trim();
+        const feedbackEl = document.getElementById("searchFeedbackMsg");
+        const listEl = document.getElementById("searchResultsList");
+        const detailEl = document.getElementById("searchDetailPanel");
+
+        if (!query) {
+          feedbackEl.innerHTML = `<span style="color:var(--danger); font-weight:700;">⚠️ 검색어를 입력해 주세요. (예: 코데인, 트라마돌, 코푸시럽, 울트라셋)</span>`;
+          listEl.innerHTML = `
+            <div class="empty-state-box">
+              <strong>검색어가 입력되지 않았습니다</strong>
+              <p style="font-size:0.83rem;">약 이름이나 성분명을 입력하시거나 상단의 '빠른검색' 태그를 눌러보세요.</p>
+            </div>
+          `;
+          detailEl.style.display = "none";
+          return;
+        }
+
+        const results = query === "전체"
+          ? DRUG_DATABASE
+          : DRUG_DATABASE.filter(d => {
+              const target = `${d.name} ${d.ingredient} ${d.category} ${d.dupGroup} ${d.narcoticType}`.toLowerCase();
+              return target.includes(query.toLowerCase());
+            });
+
+        if (results.length === 0) {
+          feedbackEl.innerHTML = `<span style="color:var(--warning); font-weight:700;">🔍 '${escapeHtml(query)}'에 대한 검색 결과가 없습니다.</span>`;
+          listEl.innerHTML = `
+            <div class="empty-state-box">
+              <strong>일치하는 의약품을 찾을 수 없습니다</strong>
+              <p style="font-size:0.83rem; margin-bottom:10px;">처방받으신 병원 조제약이라면 우측 <strong>'약봉투 사진 / 처방약 직접 등록'</strong> 폼에서 바로 등록하실 수 있습니다.</p>
+              <button type="button" class="btn btn-teal btn-sm" onclick="document.getElementById('regDrugName').value='${escapeHtml(query)}'; document.getElementById('regDrugName').focus();">
+                '${escapeHtml(query)}' 직접 등록 폼에 채우기
+              </button>
+            </div>
+          `;
+          detailEl.style.display = "none";
+          return;
+        }
+
+        feedbackEl.innerHTML = `총 <strong>${results.length}건</strong>의 의약품이 검색되었습니다. 항목을 클릭하면 상세 성분 및 마약류 여부를 볼 수 있습니다.`;
+
+        if (!results.some(r => r.id === appState.selectedSearchDrugId)) {
+          appState.selectedSearchDrugId = results[0].id;
+        }
+
+        listEl.innerHTML = results.map(drug => {
+          const isSel = drug.id === appState.selectedSearchDrugId;
+          return `
+            <div class="search-item ${isSel ? "selected" : ""}" data-drug-id="${drug.id}">
+              <div>
+                <div class="search-item-name">${escapeHtml(drug.name)}</div>
+                <div class="search-item-sub">${escapeHtml(drug.category)} · 성분: ${escapeHtml(drug.ingredient)}</div>
+              </div>
+              <div style="flex-shrink:0;">
+                ${getBadgeHtml(drug)}
+              </div>
+            </div>
+          `;
+        }).join("");
+
+        listEl.querySelectorAll(".search-item").forEach(item => {
+          item.addEventListener("click", () => {
+            appState.selectedSearchDrugId = item.dataset.drugId;
+            performDrugSearch(query);
+          });
+        });
+
+        renderSearchDetailPanel();
+      }
+
+      function renderSearchDetailPanel() {
+        const panel = document.getElementById("searchDetailPanel");
+        const drug = DRUG_DATABASE.find(d => d.id === appState.selectedSearchDrugId);
+        if (!drug) {
+          panel.style.display = "none";
+          return;
+        }
+
+        const alreadyAdded = appState.myMeds.some(m => m.name.trim() === drug.name.trim());
+        panel.style.display = "block";
+        panel.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <h3 style="font-size:1.05rem; font-weight:800;">${escapeHtml(drug.name)}</h3>
+                ${getBadgeHtml(drug)}
+              </div>
+              <p style="font-size:0.8rem; color:var(--text-sub); margin-top:3px;">효능군 중복 분류: <strong>${escapeHtml(drug.dupGroup)}</strong></p>
+            </div>
+            <button type="button" class="btn ${alreadyAdded ? "btn-outline" : "btn-primary"} btn-sm" id="btnAddSearchedDrug">
+              ${alreadyAdded ? "✅ 이미 MY 복약함에 등록됨" : "+ MY 복약 목록에 추가"}
+            </button>
+          </div>
+
+          <div style="font-size:0.84rem; background:#ffffff; padding:10px 12px; border-radius:10px; border:1px solid var(--border-color); margin-bottom:8px;">
+            <strong>주성분:</strong> ${escapeHtml(drug.ingredient)}<br/>
+            <strong>1일 권장량:</strong> ${escapeHtml(drug.maxDailyDose)}
+          </div>
+
+          <div class="interaction-box">
+            <strong>⚠️ 복용 주의사항:</strong> ${escapeHtml(drug.warning)}
+          </div>
+        `;
+
+        document.getElementById("btnAddSearchedDrug").addEventListener("click", () => {
+          if (appState.myMeds.some(m => m.name.trim().toLowerCase() === drug.name.trim().toLowerCase())) {
+            showToast(`'${drug.name}'은(는) 이미 MY 복약 목록에 등록되어 있습니다.`, "warning");
+            return;
+          }
+
+          const newMed = {
+            uid: "M_" + Date.now(),
+            drugId: drug.id,
+            name: drug.name,
+            category: drug.category,
+            ingredient: drug.ingredient,
+            registeredDate: getTodayStr(),
+            photo: "",
+            taken: false,
+            takeTime: "09:00",
+            memo: ""
+          };
+
+          appState.myMeds.unshift(newMed);
+          appState.selectedMedUid = newMed.uid;
+          saveState();
+          renderAll();
+          performDrugSearch(document.getElementById("drugSearchInput").value || "전체");
+          showToast(`'${drug.name}'이(가) MY 복약 목록에 추가되었습니다!`, "success");
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         8. 약봉투 사진 압축(Base64) 및 직접 등록 폼 처리 (핵심 기능 2)
+         ---------------------------------------------------------------------- */
+      let pendingPhotoBase64 = "";
+
+      function compressImageToBase64(file, maxWidth = 480, quality = 0.72) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement("canvas");
+              let w = img.width;
+              let h = img.height;
+              if (w > maxWidth) {
+                h = Math.round((h * maxWidth) / w);
+                w = maxWidth;
+              }
+              canvas.width = w;
+              canvas.height = h;
+              const ctx = canvas.getContext("2d");
+              ctx.drawImage(img, 0, 0, w, h);
+              resolve(canvas.toDataURL("image/jpeg", quality));
+            };
+            img.onerror = reject;
+            img.src = e.target.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function setupManualRegisterForm() {
+        const dropArea = document.getElementById("photoDropArea");
+        const photoInput = document.getElementById("regPhotoInput");
+        const previewWrap = document.getElementById("photoPreviewWrap");
+        const previewImg = document.getElementById("photoPreviewImg");
+        const fileNameEl = document.getElementById("photoFileName");
+        const removePhotoBtn = document.getElementById("btnRemovePhoto");
+        const form = document.getElementById("manualRegisterForm");
+        const errorBox = document.getElementById("regErrorBox");
+
+        dropArea.addEventListener("click", (e) => {
+          if (e.target !== removePhotoBtn) {
+            photoInput.click();
+          }
+        });
+
+        photoInput.addEventListener("change", async () => {
+          const file = photoInput.files[0];
+          if (!file) return;
+          if (!file.type.startsWith("image/")) {
+            showToast("이미지 파일(JPG, PNG 등)만 첨부할 수 있습니다.", "error");
+            return;
+          }
+          try {
+            pendingPhotoBase64 = await compressImageToBase64(file);
+            previewImg.src = pendingPhotoBase64;
+            fileNameEl.textContent = `${file.name} (저장 최적화 완료)`;
+            previewWrap.style.display = "flex";
+            showToast("약봉투 사진이 첨부되었습니다.", "success");
+          } catch (err) {
+            showToast("사진 처리 중 오류가 발생했습니다.", "error");
+          }
+        });
+
+        removePhotoBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          pendingPhotoBase64 = "";
+          photoInput.value = "";
+          previewWrap.style.display = "none";
+        });
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          errorBox.style.display = "none";
+
+          const nameVal = document.getElementById("regDrugName").value.trim();
+          const catVal = document.getElementById("regDrugCategory").value.trim();
+          const ingVal = document.getElementById("regDrugIngredient").value.trim();
+
+          // 입력값 검증 1: 빈 값
+          if (!nameVal) {
+            errorBox.textContent = "⚠️ 약 이름을 입력해 주세요. (예: 코대원포르테시럽, 아침 감기약)";
+            errorBox.style.display = "block";
+            document.getElementById("regDrugName").focus();
+            return;
+          }
+          if (!catVal) {
+            errorBox.textContent = "⚠️ 약의 주요 기능(효능군)을 선택해 주세요.";
+            errorBox.style.display = "block";
+            document.getElementById("regDrugCategory").focus();
+            return;
+          }
+
+          // 입력값 검증 2: 이미 등록된 중복 약품명 검사
+          const isDuplicate = appState.myMeds.some(
+            m => m.name.trim().toLowerCase() === nameVal.toLowerCase()
+          );
+          if (isDuplicate) {
+            errorBox.textContent = `⚠️ '${nameVal}'은(는) 이미 MY 복약 목록에 등록된 약품입니다. 중복 등록할 수 없습니다.`;
+            errorBox.style.display = "block";
+            showToast("이미 등록된 중복 약품입니다.", "warning");
+            return;
+          }
+
+          // 내장 DB와 이름이 일치하는지 확인하여 자동 매핑
+          const matchedDb = DRUG_DATABASE.find(
+            d => d.name.toLowerCase().includes(nameVal.toLowerCase()) || nameVal.toLowerCase().includes(d.name.split(" ")[0].toLowerCase())
+          );
+
+          const newMed = {
+            uid: "M_" + Date.now(),
+            drugId: matchedDb ? matchedDb.id : null,
+            name: nameVal,
+            category: catVal,
+            ingredient: ingVal || (matchedDb ? matchedDb.ingredient : ""),
+            registeredDate: getTodayStr(),
+            photo: pendingPhotoBase64,
+            taken: false,
+            takeTime: "09:00",
+            memo: ""
+          };
+
+          appState.myMeds.unshift(newMed);
+          appState.selectedMedUid = newMed.uid;
+          saveState();
+          renderAll();
+
+          // 폼 초기화
+          form.reset();
+          pendingPhotoBase64 = "";
+          previewWrap.style.display = "none";
+
+          showToast(`'${nameVal}'이(가) MY 복약 목록에 등록되었습니다!`, "success");
+          // MY 복약함 탭으로 자연스럽게 이동하여 분석 결과 확인 유도
+          switchTab("tab-my-meds");
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         9. 순수 HTML5 Canvas 인터랙티브 차트 & CSV 파싱 (핵심 기능 4)
+         ---------------------------------------------------------------------- */
+      let chartHitRegions = [];
+
+      function renderKosisChart() {
+        const canvas = document.getElementById("kosisChartCanvas");
+        const wrapper = document.getElementById("canvasWrapper");
+        if (!canvas || !wrapper) return;
+
+        const dpr = window.devicePixelRatio || 1;
+        const rect = wrapper.getBoundingClientRect();
+        const width = Math.max(rect.width - 20, 280);
+        const height = Math.max(rect.height - 20, 240);
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = width + "px";
+        canvas.style.height = height + "px";
+
+        const ctx = canvas.getContext("2d");
+        ctx.scale(dpr, dpr);
+        ctx.clearRect(0, 0, width, height);
+
+        const dataset = appState.chartMode === "yearly"
+          ? appState.kosisData.yearly
+          : appState.kosisData.ingredient;
+
+        if (!dataset || dataset.length === 0) return;
+
+        const padTop = 44;
+        const padBottom = 46;
+        const padLeft = 56;
+        const padRight = 24;
+        const chartW = width - padLeft - padRight;
+        const chartH = height - padTop - padBottom;
+
+        const maxVal = Math.max(
+          ...dataset.map(d => Math.max(d.patients, d.volume)),
+          100
+        ) * 1.15;
+
+        // 범례(Legend) 그리기
+        ctx.font = "bold 12px -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif";
+        ctx.fillStyle = "#1d4ed8";
+        ctx.fillRect(padLeft, 12, 14, 14);
+        ctx.fillStyle = "#0f172a";
+        ctx.fillText("처방 환자수 (만 명)", padLeft + 20, 23);
+
+        ctx.fillStyle = "#0d9488";
+        ctx.beginPath();
+        ctx.arc(padLeft + 155, 19, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#0f172a";
+        ctx.fillText("처방량 (백만 정·개)", padLeft + 167, 23);
+
+        // 가로 눈금선 및 Y축 라벨
+        const gridSteps = 5;
+        ctx.strokeStyle = "#e2e8f0";
+        ctx.lineWidth = 1;
+        ctx.font = "11px -apple-system, BlinkMacSystemFont, 'Malgun Gothic', sans-serif";
+        ctx.fillStyle = "#64748b";
+        ctx.textAlign = "right";
+
+        for (let i = 0; i <= gridSteps; i++) {
+          const y = padTop + chartH - (chartH * i) / gridSteps;
+          const val = Math.round((maxVal * i) / gridSteps);
+          ctx.beginPath();
+          ctx.moveTo(padLeft, y);
+          ctx.lineTo(padLeft + chartW, y);
+          ctx.stroke();
+          ctx.fillText(val.toLocaleString(), padLeft - 8, y + 4);
+        }
+
+        // 막대 그래프(처방 환자수) & 꺾은선/보조막대(처방량)
+        chartHitRegions = [];
+        const groupW = chartW / dataset.length;
+        const barW = Math.min(groupW * 0.42, 46);
+        const linePoints = [];
+
+        dataset.forEach((item, idx) => {
+          const centerX = padLeft + groupW * idx + groupW / 2;
+          const barH = (item.patients / maxVal) * chartH;
+          const barX = centerX - barW / 2;
+          const barY = padTop + chartH - barH;
+
+          // 그라데이션 막대
+          const grad = ctx.createLinearGradient(0, barY, 0, padTop + chartH);
+          grad.addColorStop(0, "#2563eb");
+          grad.addColorStop(1, "#60a5fa");
+          ctx.fillStyle = grad;
+
+          // 둥근 상단 막대
+          const r = Math.min(6, barW / 2);
+          ctx.beginPath();
+          ctx.moveTo(barX, padTop + chartH);
+          ctx.lineTo(barX, barY + r);
+          ctx.quadraticCurveTo(barX, barY, barX + r, barY);
+          ctx.lineTo(barX + barW - r, barY);
+          ctx.quadraticCurveTo(barX + barW, barY, barX + barW, barY + r);
+          ctx.lineTo(barX + barW, padTop + chartH);
+          ctx.closePath();
+          ctx.fill();
+
+          // 막대 상단 수치
+          ctx.fillStyle = "#1e3a8a";
+          ctx.font = "bold 11px sans-serif";
+          ctx.textAlign = "center";
+          ctx.fillText(item.patients.toLocaleString(), centerX, barY - 6);
+
+          // X축 라벨
+          ctx.fillStyle = "#334155";
+          ctx.font = "bold 11px sans-serif";
+          ctx.fillText(item.label, centerX, padTop + chartH + 20);
+
+          // 꺾은선 좌표 저장
+          const lineY = padTop + chartH - (item.volume / maxVal) * chartH;
+          linePoints.push({ x: centerX, y: lineY, item });
+
+          // 마우스 호버 감지 영역 저장
+          chartHitRegions.push({
+            x1: padLeft + groupW * idx,
+            x2: padLeft + groupW * (idx + 1),
+            y1: padTop,
+            y2: padTop + chartH,
+            centerX,
+            barY,
+            lineY,
+            item
+          });
+        });
+
+        // 처방량 꺾은선 그리기
+        if (linePoints.length > 0) {
+          ctx.strokeStyle = "#0d9488";
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          linePoints.forEach((pt, i) => {
+            if (i === 0) ctx.moveTo(pt.x, pt.y);
+            else ctx.lineTo(pt.x, pt.y);
+          });
+          ctx.stroke();
+
+          linePoints.forEach(pt => {
+            ctx.fillStyle = "#ffffff";
+            ctx.strokeStyle = "#0d9488";
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+          });
+        }
+
+        document.getElementById("chartDataSourceBadge").textContent = appState.kosisData.sourceLabel;
+      }
+
+      function setupChartInteractions() {
+        const canvas = document.getElementById("kosisChartCanvas");
+        const tooltip = document.getElementById("chartTooltip");
+        const wrapper = document.getElementById("canvasWrapper");
+
+        canvas.addEventListener("mousemove", (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const mx = e.clientX - rect.left;
+          const my = e.clientY - rect.top;
+
+          const hit = chartHitRegions.find(r => mx >= r.x1 && mx <= r.x2 && my >= r.y1 && my <= r.y2);
+          if (hit) {
+            tooltip.style.display = "block";
+            tooltip.innerHTML = `
+              <strong>${escapeHtml(hit.item.label)}</strong><br/>
+              • 처방 환자수: <strong>${hit.item.patients.toLocaleString()} 만 명</strong><br/>
+              • 처방량: <strong>${hit.item.volume.toLocaleString()} 백만 정·개</strong>
+            `;
+            const tipX = Math.min(mx + 14, wrapper.clientWidth - 180);
+            const tipY = Math.max(my - 40, 10);
+            tooltip.style.left = tipX + "px";
+            tooltip.style.top = tipY + "px";
+          } else {
+            tooltip.style.display = "none";
+          }
+        });
+
+        canvas.addEventListener("mouseleave", () => {
+          tooltip.style.display = "none";
+        });
+
+        window.addEventListener("resize", () => {
+          if (document.getElementById("tab-stats").classList.contains("active")) {
+            renderKosisChart();
+          }
+        });
+
+        // 차트 탭 전환 버튼
+        document.querySelectorAll(".chart-mode-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            document.querySelectorAll(".chart-mode-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            appState.chartMode = btn.dataset.chart;
+            saveState(true);
+            renderKosisChart();
+          });
+        });
+
+        // 샘플 CSV 다운로드
+        document.getElementById("btnDownloadSampleCsv").addEventListener("click", () => {
+          const csvContent = "\uFEFF구분,처방환자수(만명),처방량(백만정)\n2021년,1884,1812\n2022년,1946,1895\n2023년,1991,1938\n2024년,2015,1962\n2025년,1978,1910\n";
+          const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "KOSIS_의료용마약류_처방현황_샘플.csv";
+          a.click();
+          URL.revokeObjectURL(url);
+          showToast("샘플 CSV 파일이 다운로드되었습니다.", "success");
+        });
+
+        // 사용자 CSV 업로드 파싱
+        document.getElementById("csvUploadInput").addEventListener("change", (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (ev) => {
+            try {
+              const text = ev.target.result.replace(/^\uFEFF/, "");
+              const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+              if (lines.length < 2) {
+                showToast("CSV 파일에 데이터가 부족합니다. (헤더 포함 최소 2줄 필요)", "error");
+                return;
+              }
+
+              const parsedRows = [];
+              for (let i = 1; i < lines.length; i++) {
+                const cols = lines[i].split(",").map(c => c.trim());
+                if (cols.length < 3) continue;
+                const label = cols[0];
+                const patients = parseFloat(cols[1]);
+                const volume = parseFloat(cols[2]);
+                if (label && !isNaN(patients) && !isNaN(volume)) {
+                  parsedRows.push({ label, patients, volume });
+                }
+              }
+
+              if (parsedRows.length === 0) {
+                showToast("CSV 형식이 올바르지 않습니다. '구분,숫자,숫자' 형식을 확인하세요.", "error");
+                return;
+              }
+
+              appState.kosisData.sourceLabel = `사용자 업로드 CSV (${file.name})`;
+              appState.kosisData[appState.chartMode] = parsedRows;
+              saveState();
+              renderKosisChart();
+              showToast(`CSV 데이터(${parsedRows.length}건)가 차트에 반영되어 자동저장되었습니다!`, "success");
+            } catch (err) {
+              showToast("CSV 파일을 읽는 중 오류가 발생했습니다.", "error");
+            }
+            e.target.value = "";
+          };
+          reader.readAsText(file, "UTF-8");
+        });
+
+        // 기본 통계 초기화
+        document.getElementById("btnResetCsv").addEventListener("click", () => {
+          appState.kosisData = JSON.parse(JSON.stringify(DEFAULT_KOSIS_DATA));
+          saveState();
+          renderKosisChart();
+          showToast("기본 KOSIS 통계 데이터로 복원되었습니다.", "info");
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         10. 과다 복용 의심 증상 자가 체크리스트 로직 (핵심 기능 4)
+         ---------------------------------------------------------------------- */
+      function setupSymptomChecklist() {
+        const container = document.getElementById("symptomChecklist");
+        const resultBox = document.getElementById("triageResultBox");
+        const clearBtn = document.getElementById("btnClearSymptoms");
+
+        function evaluateSymptoms() {
+          const checkboxes = container.querySelectorAll("input[type='checkbox']");
+          let totalScore = 0;
+          let hasEmergency = false;
+          const checkedNames = [];
+
+          checkboxes.forEach(chk => {
+            const parent = chk.closest(".symptom-item");
+            if (chk.checked) {
+              parent.classList.add("checked");
+              const val = parseInt(chk.value, 10) || 1;
+              totalScore += val;
+              if (val >= 3) hasEmergency = true;
+              checkedNames.push(chk.dataset.name);
+            } else {
+              parent.classList.remove("checked");
+            }
+          });
+
+          if (totalScore === 0) {
+            resultBox.style.background = "var(--success-bg)";
+            resultBox.style.borderColor = "var(--success-border)";
+            resultBox.style.color = "#065f46";
+            resultBox.innerHTML = `
+              <strong>현재 상태: 특이 의심 증상 없음 (정상)</strong>
+              <p style="margin-top:4px; font-size:0.83rem;">처방된 용법·용량을 준수하여 복용하시고, 다른 감기약·진통제 추가 복용 전 중복 여부를 꼭 확인하세요.</p>
+            `;
+          } else if (hasEmergency || totalScore >= 4) {
+            resultBox.style.background = "var(--danger-bg)";
+            resultBox.style.borderColor = "var(--danger-border)";
+            resultBox.style.color = "#991b1b";
+            resultBox.innerHTML = `
+              <strong>🚨 응급 위험 단계 (선택 증상: ${escapeHtml(checkedNames.join(", "))})</strong>
+              <p style="margin-top:4px; font-size:0.83rem;">의료용 마약류(코데인·트라마돌 등) 과다 복용에 의한 중추신경·호흡 억제 가능성이 있습니다. <strong>즉시 복용을 중단하고 119에 연락하거나 응급실을 방문</strong>하세요. (약봉투 지참 필수)</p>
+            `;
+          } else if (totalScore >= 2) {
+            resultBox.style.background = "var(--warning-bg)";
+            resultBox.style.borderColor = "var(--warning-border)";
+            resultBox.style.color = "#92400e";
+            resultBox.innerHTML = `
+              <strong>⚠️ 중등도 주의 단계 (선택 증상: ${escapeHtml(checkedNames.join(", "))})</strong>
+              <p style="margin-top:4px; font-size:0.83rem;">추가 복용을 멈추고 보호자 관찰 하에 휴식을 취하세요. 증상이 악화되면 처방 병원이나 응급실에 방문해 약물 선별 검사를 받으세요.</p>
+            `;
+          } else {
+            resultBox.style.background = "var(--warning-bg)";
+            resultBox.style.borderColor = "var(--warning-border)";
+            resultBox.style.color = "#92400e";
+            resultBox.innerHTML = `
+              <strong>🔔 경미한 부작용 주의 (선택 증상: ${escapeHtml(checkedNames.join(", "))})</strong>
+              <p style="margin-top:4px; font-size:0.83rem;">감기약·진통제 복용 시 흔히 나타날 수 있는 반응이나, 중복 복용이 없는지 확인하고 수분을 충분히 섭취하세요.</p>
+            `;
+          }
+        }
+
+        container.querySelectorAll("input[type='checkbox']").forEach(chk => {
+          chk.addEventListener("change", evaluateSymptoms);
+        });
+
+        clearBtn.addEventListener("click", () => {
+          container.querySelectorAll("input[type='checkbox']").forEach(chk => (chk.checked = false));
+          evaluateSymptoms();
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         11. 탭 전환 & 전체 초기화
+         ---------------------------------------------------------------------- */
+      function switchTab(tabId) {
+        document.querySelectorAll(".nav-tab").forEach(btn => {
+          const isTarget = btn.dataset.tab === tabId;
+          btn.classList.toggle("active", isTarget);
+          btn.setAttribute("aria-selected", isTarget ? "true" : "false");
+        });
+        document.querySelectorAll(".tab-section").forEach(sec => {
+          sec.classList.toggle("active", sec.id === tabId);
+        });
+
+        if (tabId === "tab-stats") {
+          setTimeout(renderKosisChart, 30);
+        }
+      }
+
+      function renderAll() {
+        renderGlobalBanner();
+        renderMyMedList();
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadState();
+        renderAll();
+        performDrugSearch("코데인");
+        setupManualRegisterForm();
+        setupChartInteractions();
+        setupSymptomChecklist();
+
+        // 상단 탭 클릭 이벤트
+        document.querySelectorAll(".nav-tab").forEach(btn => {
+          btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+        });
+
+        // '+ 새 약 추가' 버튼
+        document.getElementById("btnGoToSearch").addEventListener("click", () => {
+          switchTab("tab-search");
+          document.getElementById("drugSearchInput").focus();
+        });
+
+        // 검색 이벤트
+        const searchInput = document.getElementById("drugSearchInput");
+        document.getElementById("btnSearchDrug").addEventListener("click", () => {
+          performDrugSearch(searchInput.value);
+        });
+        searchInput.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            performDrugSearch(searchInput.value);
+          }
+        });
+
+        // 빠른 검색 태그
+        document.querySelectorAll(".quick-tag").forEach(tag => {
+          tag.addEventListener("click", () => {
+            const q = tag.dataset.query;
+            searchInput.value = q === "전체" ? "" : q;
+            performDrugSearch(q);
+          });
+        });
+
+        // 기본 예시 복원 버튼
+        document.getElementById("btnResetSample").addEventListener("click", () => {
+          showConfirmDialog(
+            "기본 예시 데이터로 초기화",
+            "현재 저장된 복약 목록과 통계를 초기 예시 상태로 되돌리시겠습니까?",
+            () => {
+              localStorage.removeItem(STORAGE_KEY);
+              appState.myMeds = JSON.parse(JSON.stringify(DEFAULT_INITIAL_MEDS));
+              appState.selectedMedUid = appState.myMeds[0].uid;
+              appState.kosisData = JSON.parse(JSON.stringify(DEFAULT_KOSIS_DATA));
+              saveState();
+              renderAll();
+              renderKosisChart();
+              showToast("기본 예시 데이터로 초기화되었습니다.", "info");
+            }
+          );
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
